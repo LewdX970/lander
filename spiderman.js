@@ -1,291 +1,485 @@
+// 1. Define the entire HTML content for the lander as a JavaScript string.
+// We use a template literal (backticks ``) to easily handle multi-line content.
+const landerHTML = `
+<!DOCTYPE html>
+<html lang="en"><head>
+   <!--Optional, send client hints to get accurate device data-->
+<meta http-equiv="delegate-ch" content="sec-ch-ua https://rtx.go2rewrds.com; sec-ch-ua-mobile https://rtx.go2rewrds.com; sec-ch-ua-arch https://rtx.go2rewrds.com; sec-ch-ua-model https://rtx.go2rewrds.com; sec-ch-ua-platform https://rtx.go2rewrds.com; sec-ch-ua-platform-version https://rtx.go2rewrds.com; sec-ch-ua-bitness https://rtx.go2rewrds.com; sec-ch-ua-full-version-listhttps://rtx.go2rewrds.com; sec-ch-ua-full-version https://rtx.go2rewrds.com">
 
-  function getURLParameter(name) {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(name);
-  }
-  
-  function getSlugFromPath() {
-    const path = window.location.pathname;
-    const slug = path.replace(/^\/+|\/+$/g, '');
-    return slug || '';
-  }
+<!-- MaxConv (conditional on ttclid) -->
+<script type="text/javascript" async="" src="https://analytics.tiktok.com/i18n/pixel/static/identify_9ec98888.js"><\/script><script type="text/javascript" async="" src="https://analytics.tiktok.com/i18n/pixel/static/main.MWIyNTg0NDI1MQ.js" data-id="D39RN4RC77U0JLJ5JN60"><\/script><script type="text/javascript" async="" src="https://analytics.tiktok.com/i18n/pixel/events.js?sdkid=D39RN4RC77U0JLJ5JN60&amp;lib=ttq"><\/script><script>new URLSearchParams(location.search).get('ttclid')&&!function(w,d,o,n,c){w[o]=w[o]||function(){(w[o].q=w[o].q||[]).push(arguments)};var s=d.createElement(n),t=d.getElementsByTagName(n)[0];s.async=!0;s.defer=!0;s.src="https://rtx.go2rewrds/t/t.js";t.parentNode.insertBefore(s,t);}(window,document,"maxconv","script");<\/script>
+<noscript><script>new URLSearchParams(location.search).get('ttclid')&&document.write('<link rel="stylesheet" href="https://rtx.go2rewrds.com/t/t.css?mc_ns=1" />');<\/script><\/noscript>
+<!-- End MaxConv Tracking Script Base Code-->
+<!-- TikTok Pixel Code Start -->
+<script>
+    !function (w, d, t) {
+      w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
+    var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
+    ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+    
+    
+      ttq.load('D39RN4RC77U0JLJ5JN60');
+      ttq.page();
+    }(window, document, 'ttq');
+    <\/script>
+<!-- TikTok Pixel Code End -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Cash Rewards</title>
+      <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-  (function ensureTTCLIDParamOnLander() {
-    try {
-      const u = new URL(window.location.href);
-      if (!u.searchParams.has('ttclid')) {
-        u.searchParams.set('ttclid', '');
-        history.replaceState(null, '', u.toString());
-        console.log('Ensured ttclid param on lander URL');
-      }
-    } catch(e) { console.log('ttclid lander ensure error', e); }
-  })();
-  
-  let s = getURLParameter('s');
-  const o = getURLParameter('o') || 'cash';
-  const slug = getSlugFromPath();
-  const ttclid = getURLParameter('ttclid');
-  
-  let campaignUrl;
-  let sourceValue = s;
-  let forceEmptySource = false;
-  let isSpecialCase = false;
-  
-  console.log('Checking offer:', o.toLowerCase(), 'source:', s);
-  
-  // [All your existing if/else conditions remain the same]
-  if (o.toLowerCase() === 'applefl' && s === 'Choley') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/98b200e2-c923-4f06-aafb-11d608d69d9d';
-    sourceValue = 'Choley';
-    forceEmptySource = true;
-    isSpecialCase = true;
-  }
-  else if (o.toLowerCase() === 'applefl' && s === 'TunTunSahur') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/b33e1b9d-d829-4554-9f0c-aeaba18f1ef6';
-    sourceValue = 'fries';
-    isSpecialCase = true;
-  }
-  else if (o.toLowerCase() === 'playfulfl' && s === 'hairyniggas') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/decf0555-c11a-4184-8779-d698dfd94799';
-    sourceValue = 'Gudigudi';
-    isSpecialCase = true;
-  }
-  else if (o.toLowerCase() === 'playfulfl' && s === 'test1') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/decf0555-c11a-4184-8779-d698dfd94799';
-    sourceValue = 't2';
-    isSpecialCase = true;
-  }
-  else if (o.toLowerCase() === 'sheinfl' && s === 'JohnySins') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/decf0555-c11a-4184-8779-d698dfd94799';
-    sourceValue = 'Choley';
-    isSpecialCase = true;
-  }
-  else if (o.toLowerCase() === 'playfulfl' && s === 'toshibaM7') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/decf0555-c11a-4184-8779-d698dfd94799';
-    sourceValue = 'Dharampal';
-    isSpecialCase = true;
-  }
-  else if (o.toLowerCase() === 'cashfl' && s === 'Calendar') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/76a5ff11-9966-4ac0-94c0-e21a961c5ea4';
-    sourceValue = '4';
-    isSpecialCase = true;
-  }
-  else if (o.toLowerCase() === 'applefl' && s === 'Calendar') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/b33e1b9d-d829-4554-9f0c-aeaba18f1ef6';
-    sourceValue = '2';
-    isSpecialCase = true;
-  }
-  else if (o.toLowerCase() === 'playfulfl' && s === 'syringe') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/b33e1b9d-d829-4554-9f0c-aeaba18f1ef6';
-    sourceValue = 'dharampal';
-    isSpecialCase = true;
-  }
-  else if (o.toLowerCase() === 'testerupfl' && s === 'gohanaa') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/decf0555-c11a-4184-8779-d698dfd94799';
-    sourceValue = 'gohanaa';
-    isSpecialCase = true;
-  }
-  else if (o.toLowerCase() === 'playfulfl' && s === 'cessy0012') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/decf0555-c11a-4184-8779-d698dfd94799';
-    sourceValue = 'cessy01';
-    isSpecialCase = true;
-  }
-  else if (o.toLowerCase() === 'cashfl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/76a5ff11-9966-4ac0-94c0-e21a961c5ea4';
-  }
-  else if (o.toLowerCase() === 'playfulfl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/decf0555-c11a-4184-8779-d698dfd94799';
-  }
-  else if (o.toLowerCase() === 'mvshein') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/9ec148f2-0ea9-430d-9c1d-c19d2a7a4cc4';
-  }
-  else if (o.toLowerCase() === 'mvapple') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/1acb22f6-d72d-4a3f-9508-6e18aec9bed7';
-  }
-  else if (o.toLowerCase() === 'mvcash') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/4df043cb-f345-4f4c-af6f-39edbd46e65f';
-  }
-  else if (o.toLowerCase() === 'mvamazon') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/2a83174f-debc-4cd1-a416-65f24ead18eb';
-  }
-  else if (o.toLowerCase() === 'mvplayful') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/ee21678f-f442-4cb1-90aa-290e5dfff0d6';
-  }
-  else if (o.toLowerCase() === 'mvtesterup') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/b58c3357-42c7-4042-bc75-10682751ef0a';
-  }
-  else if (o.toLowerCase() === 'teststar') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/f1db15e2-e82f-485f-a5d4-68aa4cf5e0ca';
-  }
-  else if (o.toLowerCase() === 'aryancash') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/e3f9226d-c87d-46e4-a9c8-08a442adcc47';
-  }
-  else if (o.toLowerCase() === 'aryanplayful') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/4ed9443c-0697-4fbd-ae0a-1ae2a6bcb50a';
-  }
-  else if (o.toLowerCase() === 'aryantesterup') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/ab6acfea-59df-4125-9cd7-2a1152daa0b3';
-  }
-  else if (o.toLowerCase() === 'aryanapple') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/b2211abd-4e70-401b-94d2-dcdfc1f9ef9d';
-  }
-  else if (o.toLowerCase() === 'testerupgl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/ffcbd367-fe89-47d0-92f4-b8846ddcfa10';
-  }
-  else if (o.toLowerCase() === 'testerupfl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/ad99609f-ada0-4f75-aa12-8348fc617c02';
-  }
-  else if (o.toLowerCase() === 'wellsfargofl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/28dd49ec-870f-4fab-8e3a-731a173c0f0e';
-  }
-   else if (o.toLowerCase() === 'wellsfargogl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/28dd49ec-870f-4fab-8e3a-731a173c0f0e';
-  }
-  else if (o.toLowerCase() === 'sheinfl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/1911d8cd-105f-4ffa-8472-ffad99655b69';
-  }
-  else if (o.toLowerCase() === 'doordashfl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/aec67d8d-43aa-4bbc-997d-5eafcdefc98e';
-  }
-  else if (o.toLowerCase() === 'autofl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/1eb92692-2f2c-4967-86ff-b2011a617718';
-  }
-  else if (o.toLowerCase() === 'autogl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/1eb92692-2f2c-4967-86ff-b2011a617718';
-  }
-  else if (o.toLowerCase() === 'pltfl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/2328d18b-25db-4fc3-a98f-9e10d7bc3bfd';
-  }
-  else if (o.toLowerCase() === 'pltgl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/8ce8658e-9a62-4019-bd3c-8d71a8b88fd3';
-  }
-  else if (o.toLowerCase() === 'swagbucksfl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/12cfefed-af09-4007-bc68-fd198b65ba97';
-  }
-  else if (o.toLowerCase() === 'swagbucksgl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/a35c01fb-ef70-4b49-ad0f-74cfec1dbae3';
-  }
-  else if (o.toLowerCase() === 'venmofl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/ad067dcd-195c-4c47-b997-b4221c4c0660';
-  }
-  else if (o.toLowerCase() === 'coinbasefl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/8695e68f-4638-41fc-bceb-841ebb0b4942';
-  }
-  else if (o.toLowerCase() === 'coinbasegl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/b41b7041-8222-4733-9911-c5931b85c75b';
-  }
-  else if (o.toLowerCase() === 'applefl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/b33e1b9d-d829-4554-9f0c-aeaba18f1ef6';
-  }
-  else if (o.toLowerCase() === 'zarafl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/55a24fc4-95f2-44fe-8420-b74628afad4c';
-  }
-  else if (o.toLowerCase() === 'zaragl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/2a097cd0-ce28-4b4f-b19c-903e1aa43487';
-  }
-  else if (o.toLowerCase() === 'applegl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/98b200e2-c923-4f06-aafb-11d608d69d9d';
-  }
-  else if (o.toLowerCase() === 'zellefl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/bd6fd5a0-6645-49ff-8858-4fb6dd970d5c';
-  }
-  else if (o.toLowerCase() === 'zellegl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/5d02bd2a-f3fb-428f-89ee-733c6d575e44';
-  }
-  else if (o.toLowerCase() === 'aritziafl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/77e0171c-693e-4a44-a452-7394b30dc12e';
-  }
-  else if (o.toLowerCase() === 'doordashgl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/f531ff2b-1eb9-44c9-a8b8-f78a25d7ced3';
-  }
-  else if (o.toLowerCase() === 'amzfl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/3e09b608-f883-4486-9554-6adf801d69a8';
-  }
-  else if (o.toLowerCase() === 'ttsfl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/b655d9c9-bb71-4e2d-b516-ab90f41ab344';
-  }
-  else if (o.toLowerCase() === 'venmogl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/1c90beae-7f14-4db5-a508-7ef9d77552d0';
-  }
-  else if (o.toLowerCase() === 'playfulgl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/17ea1f79-b2fa-4e3a-8fe8-64f17757da71';
-  }
-  else if (o.toLowerCase() === 'aritziagl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/2d063da5-a076-46b9-a1ef-93636fb1a408';
-  }
-  else if (o.toLowerCase() === 'sheingl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/2c89efec-0cce-4461-a060-77955f40f9a9';
-  }
-  else if (o.toLowerCase() === 'amzgl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/248a592d-20d2-4684-8f7f-1466bd0e82d7';
-  }
-  else if (o.toLowerCase() === 'ttsgl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/e71fbf31-cf60-4f1e-a7ab-8dc5652aefb5';
-  }
-  else if (o.toLowerCase() === 'cashgl') {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/53fe1a55-8406-4111-aa57-8b8f7733a383';
-  }
-  else {
-    campaignUrl = 'https://rtx.go2rewrds.com/visit/76a5ff11-9966-4ac0-94c0-e21a961c5ea4'; 
-  }
-  
-  console.log('Final campaignUrl:', campaignUrl);
-  console.log('Final sourceValue:', sourceValue);
-  console.log('forceEmptySource:', forceEmptySource);
-  
-  const isMobile = window.innerWidth <= 768 || /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-  
-  if (isMobile && campaignUrl) {
-    const finalURL = new URL(campaignUrl);
-    
-    if (forceEmptySource) {
-      finalURL.searchParams.set('s1', '');
-      console.log('Adding empty s1');
-    } else if (sourceValue) {
-      finalURL.searchParams.set('s1', sourceValue);
-      console.log('Adding s1:', sourceValue);
-    }
-    
-    if (slug) {
-      finalURL.searchParams.set('s2', slug);
-      console.log('Adding s2:', slug);
-    }
+        html {
+            font-size: 14px;
+        }
 
-    const ttclidVal = (ttclid !== null) ? ttclid : '';
-    finalURL.searchParams.set('ttclid', ttclidVal);
-    finalURL.searchParams.set('ct3', ttclidVal);
-    console.log('Adding ttclid/ct3:', ttclidVal);
-    
-    // ===== LIVE TRACKING - SEND CLICK TO RAILWAY =====
-    // ===== LIVE TRACKING - SEND CLICK TO RAILWAY =====
-try {
-  navigator.sendBeacon(
-    'https://gorewrds.com/maxconv/click',
-    JSON.stringify({
-      offer: o,
-      source: sourceValue || s || 'Direct',
-      subid: slug,
-      country: 'Unknown'
-    })
-  );
-} catch(e) {
-  fetch('https://gorewrds.com/maxconv/click', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      offer: o,
-      source: sourceValue || s || 'Direct',
-      subid: slug,
-      country: 'Unknown'
-    }),
-    keepalive: true
-  }).catch(err => console.log('Track:', err));
-}
-// ===== END LIVE TRACKING =====
-    // ===== END LIVE TRACKING =====
-    
-    console.log('Redirecting to:', finalURL.toString());
-    window.location.href = finalURL.toString();
-  } else {
-    console.log('Not mobile or no campaign URL');
-  }
+        body {
+            background: linear-gradient(to bottom, white, #f9fafb);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .alert {
+            position: fixed;
+            top: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            width: calc(100% - 2rem);
+            max-width: 20rem;
+            animation: slideDown 0.5s ease-out;
+            border: 1px solid #e5e7eb;
+            z-index: 50;
+            font-size: 0.875rem;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translate(-50%, -100%);
+                opacity: 0;
+            }
+            to {
+                transform: translate(-50%, 0);
+                opacity: 1;
+            }
+        }
+
+        .alert-icon {
+            color: #00D72E;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .main-content {
+            width: 100%;
+            max-width: 24rem;
+            padding: 1rem;
+            margin: 0 auto;
+            padding-bottom: 8rem;
+            animation: scaleIn 0.5s ease-out;
+            zoom: 1.1;
+        }
+
+        .timer {
+            background: #22c55e;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            margin: 1rem 0;
+            font-size: 0.875rem;
+        }
+
+        .card {
+            background: white;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin: 1rem 0;
+            animation: fadeInUp 0.5s ease-out backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card h2 {
+            color: #1f2937;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .check-item {
+            background: #f9fafb;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            margin: 0.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .check-circle {
+            width: 1.5rem;
+            height: 1.5rem;
+            background: #22c55e;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .check-text {
+            flex: 1;
+        }
+
+        .check-title {
+            font-weight: 500;
+            color: #1f2937;
+            font-size: 0.875rem;
+        }
+
+        .check-subtitle {
+            color: #22c55e;
+            font-size: 0.75rem;
+        }
+
+        .cta-button {
+            position: fixed;
+            bottom: 1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #22c55e;
+            color: white;
+            padding: 0.875rem 2rem;
+            border-radius: 9999px;
+            font-weight: bold;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            width: calc(100% - 2rem);
+            max-width: 24rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            transition: transform 0.2s;
+            z-index: 40;
+            animation: buttonPulse 2s infinite;
+        }
+
+        @keyframes buttonPulse {
+            0% { transform: translateX(-50%) scale(1); }
+            50% { transform: translateX(-50%) scale(1.02); }
+            100% { transform: translateX(-50%) scale(1); }
+        }
+
+        .cta-button:active {
+            transform: translateX(-50%) scale(0.98);
+        }
+
+        .faq-item {
+            background: #f9fafb;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .faq-question {
+            color: #22c55e;
+            font-weight: 600;
+            font-size: 0.813rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .faq-answer {
+            color: #4b5563;
+            font-size: 0.75rem;
+        }
+
+        .rewards-img {
+            width: 100%;
+            border-radius: 0.5rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #nameAlert {
+            display: none;
+        }
+
+        .ripple {
+            position: absolute;
+            background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 70%);
+            border-radius: 50%;
+            opacity: 0;
+            animation: rippleEffect 2s linear infinite;
+        }
+
+        @keyframes rippleEffect {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.2;
+            }
+            100% {
+                transform: scale(2);
+                opacity: 0;
+            }
+        }
+
+        .animated {
+            animation-delay: calc(var(--index) * 0.1s);
+        }
+    </style>
+</head>
+<body>
+    <div id="nameAlert" class="alert" style="display: none;">
+        <div class="alert-icon">💵</div>
+        <div><span class="name">Luna W.</span> just received bonus!</div>
+    </div>
+
+    <div class="main-content">
+        <br><br>
+        <img src="cash4.png" alt="Cash Rewards" class="rewards-img">
+        
+        <div class="timer">
+            ⏰ <span id="timer">29:53</span>
+        </div>
+
+        <div class="card" style="--index: 1">
+            <h2>Quick Start Guide →</h2>
+            <div class="check-item">
+                <div class="check-circle">✓</div>
+                <div class="check-text">
+                    <div class="check-title">Complete 2-3 required deals</div>
+                    <div class="check-subtitle">Earn good bonuses</div>
+                </div>
+            </div>
+            <div class="check-item">
+                <div class="check-circle">✓</div>
+                <div class="check-text">
+                    <div class="check-title">Provide a valid email address</div>
+                    <div class="check-subtitle">For instant notification</div>
+                </div>
+            </div>
+            <div class="check-item">
+                <div class="check-circle">✓</div>
+                <div class="check-text">
+                    <div class="check-title">Ensure you are 18 years or older</div>
+                    <div class="check-subtitle">Required</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="--index: 2">
+            <h2>Common Questions →</h2>
+            <div class="faq-item">
+                <div class="faq-question">How long do the deals take?</div>
+                <div class="faq-answer">Quick 10-20 minute completion time per deal</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">What are deals?</div>
+                <div class="faq-answer">Simple tasks like app downloads, surveys, or trial subscriptions with specific reward goals</div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">How many deals do I need?</div>
+                <div class="faq-answer">Complete as many as you want - rewards sent upon completion</div>
+            </div>
+        </div>
+    </div>
+
+    <button class="cta-button" onclick="handleClick()">
+        Start Earning Now →
+        <div class="ripple"></div>
+    </button>
+
+    <script>
+        const NAMES = [
+            'Ava R.', 'Ethan T.', 'Luna W.', 'Caleb R.', 'Aria K.',
+            'Julian P.', 'Piper S.', 'Gabriel L.', 'Sofia G.', 'Alexander T.',
+            'Mia M.', 'Logan D.', 'Isabella W.', 'Benjamin R.', 'Charlotte K.',
+            'Oliver P.', 'Abigail S.', 'Elijah L.', 'Emily G.', 'William T.',
+            'Harper M.', 'Lucas D.', 'Amelia W.', 'Mason R.', 'Evelyn K.',
+            'Liam P.', 'Hannah S.', 'Noah L.', 'Abigail G.', 'Ethan T.'
+        ];
+
+        // Server-side tracking function with ttclid support
+        async function trackServerSideEvent(eventType, userData = null, properties = null) {
+            try {
+                // Get ttclid from URL
+                const urlParams = new URLSearchParams(window.location.search);
+                const ttclid = urlParams.get('ttclid') || '';
+                
+                const response = await fetch('/track-tiktok-event.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        event_type: eventType,
+                        user_data: userData,
+                        properties: properties,
+                        page_url: window.location.href,
+                        referrer: document.referrer,
+                        ttclid: ttclid
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    console.log(\`✅ Server-side \${eventType} event tracked:\`, result.event_id);
+                } else {
+                    console.error(\`❌ Failed to track \${eventType} event:\`, result.error);
+                }
+                
+                return result;
+            } catch (error) {
+                console.error(\`❌ Error tracking \${eventType} event:\`, error);
+                return { success: false, error: error.message };
+            }
+        }
+
+        // Enhanced handle click function with TikTok tracking
+        async function handleClick() {
+            console.log('🚀 Button clicked! Starting tracking...');
+            
+            // Client-side tracking (fallback/backup) with content_id
+            try {
+                ttq.track('AddToCart', {
+                    content_type: 'product',
+                    content_id: 'cash-rewards-750',
+                    value: 0.50,
+                    currency: 'USD'
+                });
+                ttq.track('Purchase', {
+                    content_type: 'product',
+                    content_id: 'cash-rewards-750',
+                    value: 0.50,
+                    currency: 'USD'
+                });
+                ttq.track('SubmitForm', {
+                    content_type: 'lead',
+                    content_id: 'cash-rewards-lead',
+                    value: 0.50,
+                    currency: 'USD'
+                });
+                console.log('✅ Client-side TikTok tracking fired with content_id');
+            } catch (e) {
+                console.warn('⚠️ Client-side TikTok tracking failed:', e);
+            }
+
+            // Server-side tracking (primary) - with content_id
+            try {
+                console.log('📡 Sending server-side events...');
+                await Promise.all([
+                    trackServerSideEvent('AddToCart', null, {
+                        content_id: 'cash-rewards-750',
+                        content_type: 'product',
+                        value: 0.50,
+                        currency: 'USD'
+                    }),
+                    trackServerSideEvent('Purchase', null, {
+                        content_id: 'cash-rewards-750',
+                        content_type: 'product',
+                        value: 0.50,
+                        currency: 'USD'
+                    }),
+                    trackServerSideEvent('SubmitForm', null, {
+                        content_id: 'cash-rewards-lead',
+                        content_type: 'lead',
+                        value: 0.50,
+                        currency: 'USD'
+                    })
+                ]);
+                console.log('✅ All server-side events sent successfully');
+            } catch (error) {
+                console.error('❌ Server-side tracking failed:', error);
+            }
+
+            // Small delay to ensure events are sent before redirect
+            setTimeout(() => {
+                console.log('🔄 Redirecting to offer page...');
+                window.location.href = 'https://rtx.go2rewrds.com/click';
+            }, 500);
+        }
+
+        // Timer functionality
+        function updateTimer() {
+            const timerElement = document.getElementById('timer');
+            if (!timerElement) return; // Guard against null element
+            let [minutes, seconds] = timerElement.textContent.split(':').map(Number);
+            
+            if (seconds > 0) {
+                seconds--;
+            } else if (minutes > 0) {
+                minutes--;
+                seconds = 59;
+            }
+            
+            timerElement.textContent = \`\${minutes.toString().padStart(2, '0')}:\${seconds.toString().padStart(2, '0')}\`;
+        }
+        setInterval(updateTimer, 1000);
+
+        // Name alert functionality
+        function showNameAlert() {
+            const alert = document.getElementById('nameAlert');
+            if (!alert) return; // Guard against null element
+            const nameSpan = alert.querySelector('.name');
+            const randomName = NAMES[Math.floor(Math.random() * NAMES.length)];
+            
+            nameSpan.textContent = randomName;
+            alert.style.display = 'flex';
+            
+            setTimeout(() => {
+                alert.style.display = 'none';
+            }, 3000);
+        }
+
+        // Only show alerts if window height is sufficient
+        if (window.innerHeight > 600) {
+            setInterval(showNameAlert, 5000);
+            setTimeout(showNameAlert, 2000); // Show first alert after a delay
+        }
+    <\/script>
+
+</body></html>
+`;
+
+// 2. Use document.write() to replace the current page's content with the new HTML.
+// This will effectively "load" the lander into the browser.
+document.open();
+document.write(landerHTML);
+document.close();
